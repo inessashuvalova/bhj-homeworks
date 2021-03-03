@@ -2,34 +2,29 @@
 
 
 const sliderItem = Array.from(document.querySelectorAll('.slider__item'));
-document.querySelector('.slider__arrow_next').onclick = function () {
-  slideRight();    
-}
-
-document.querySelector('.slider__arrow_prev').onclick = function () {   
-  slideLeft();
-}
+document.querySelector('.slider__arrow_next').onclick = slideRight;
+document.querySelector('.slider__arrow_prev').onclick = slideLeft;
+const sliderCount = sliderItem.findIndex((element) => element.classList.contains('slider__item_active'))
 
 
 function slideRight() {    
-     findIndex(sliderItem[i].classList.remove("slider__item_active"));
-      ++i;
+  sliderCount[i].classList.remove('slider__item_active');
+  sliderCount < sliderItem.length - 1 ? sliderCount + 1 : sliderCount;   
+  sliderItem[sliderCount].classList.add('slider__item_active');
+}
 
-      if (i === sliderItem.length) i = 0;
-      sliderItem[i].classList.add("slider__item_active");
+function slideLeft() {  
+  sliderCount[i].classList.remove('slider__item_active'); 
+  sliderCount <= 0
+  ? (sliderCount + sliderItems.length - 1)
+  : (sliderCount - 1);
+
+
+  sliderItem[sliderCount].classList.add('slider__item_active');
   }
 
 
 
-function slideLeft() {   
-
-      findIndex(sliderItem[i].classList.remove("slider__item_active"));
-      --i;
-
-      if (i === -1) i = sliderItems.length - 1;
-      sliderItem[i].classList.add("slider__item_active");
-  }
 
 
-
-
+  
