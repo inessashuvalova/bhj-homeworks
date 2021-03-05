@@ -17,11 +17,18 @@ for (let i = 0; i < dropdownValue.length; i++) {
    }, false);
 }
 
-const dropdownLink = document.querySelectorAll('.dropdown__link');
-dropdownLink.forEach(link => {
-  link.addEventListener('click', function(evt) {
-    dropdownValue.textContent = link.textContent; 
-    dropdownList.classList.remove('dropdown__list_active');
-    evt.preventDefault();
-  }, false);
-})
+const dropdownLink = Array.from(document.querySelectorAll('.dropdown__link'));
+for (let i = 0; i < dropdownLink.length; i++) {
+   dropdownLink[i].addEventListener("click", function (evt) {
+      this.closest('.dropdown').querySelector('.dropdown__value').textContent = this.textContent;
+      this.closest('.dropdown').querySelector('.dropdown__list').classList.toggle('dropdown__list_active');
+      evt.preventDefault();
+   }, false);
+}
+
+
+
+
+
+  
+
