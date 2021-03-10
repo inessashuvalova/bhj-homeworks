@@ -70,6 +70,19 @@ class Autocomplete {
 
   getMatches(text) {
    
+    const autocompleteArray = Array.from(this.input.querySelectorAll('option'));
+    const autocompleteArrayFilter = autocompleteArray.filter((optionElement) => optionElement.text.includes(text));
+    
+    return autocompleteArrayFilter.reduce((accumulator, currentValue) => {
+     const object = accumulator.push({
+        text: currentValue.text,
+        value: currentValue.value
+      });
+      return accumulator;
+      }, []);
+  }
 }
 
 new Autocomplete( document.querySelector( '.autocomplete' ));
+
+
