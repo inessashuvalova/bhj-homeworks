@@ -12,7 +12,7 @@ arrowNext.addEventListener('click', () => {
 
 arrowPrev.addEventListener('click', () => {
   let sliderActive = sliderItems.findIndex((element) => element.classList.contains('slider__item_active'));
-  changeSlide(sliderActive <= 0 ? sliderActive + slider.Items.length - 1 : sliderActive - 1)
+  changeSlide(sliderActive <= 0 ? sliderActive + sliderItems.length - 1 : sliderActive - 1)
 });
 
 
