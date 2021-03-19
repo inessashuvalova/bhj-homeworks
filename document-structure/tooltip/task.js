@@ -12,6 +12,7 @@ hasTooltips.forEach((tooltip) =>
       let currentElement = evt.target;
       if (currentElement === activeTooltip) {
          tooltipDiv.remove()
+         activeTooltip = '';
     }
       activeTooltip = currentElement;
       document.body.append(tooltipTemplate(currentElement))
@@ -20,7 +21,6 @@ hasTooltips.forEach((tooltip) =>
 function tooltipTemplate(currentElement) {
    tooltipDiv.innerHTML = currentElement.title;
    let coords = currentElement.getBoundingClientRect();
-   tooltipDiv.setAttribute(`left: ${coords.left}px; 
-   top: ${coords.top + coords.height}px`);
+   tooltipDiv.setAttribute('style', `left: ${currentElementPosition.left}px; top: ${currentElementPosition.top + currentElementPosition.height}px`);
    return tooltipDiv;
 }

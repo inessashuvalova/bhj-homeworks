@@ -1,51 +1,53 @@
 'use strict';
-const productCart = document.querySelector('div.cart__products');
+
 const productsList = Array.from(document.querySelectorAll('div.product'));
+const cartProducts = document.querySelector('div.cart__products');
+
+productsList.forEach((product) => {
+   let productId = product.dataset.id;
+   let productImg = product.querySelector('img.product__image').src;
+
+   Array.from(product.querySelectorAll('div.product__quantity-control')).forEach((quantityControl) => {
+      quantityControl.addEventListener('click', (evt) => {
+         evt.preventDefault();
+         if (evt.target.classList.contains('product__quantity-control_inc')) {
+            product.querySelector('div.product__quantity-value').textContent++;
+         } else if (evt.target.classList.contains('product__quantity-control_dec') && Number.parseInt(product.querySelector('div.product__quantity-value').textContent) > 1) { // технически, вероятно, парсинт нужно везде вставить?
+            product.querySelector('div.product__quantity-value').textContent--;
+         }
+      }, false);
+   })
+
+   product.querySelector('div.product__add').addEventListener('click', (evt) => {
+      evt.preventDefault();
+      let nowCartProduct = Array.from(cartProducts.querySelectorAll('.cart__product')).find(item => item.dataset.id == productId);
+      if (nowCartProduct) {
+         nowCartProduct.querySelector('div.cart__product-count').textContent = Number.parseInt(nowCartProduct.querySelector('div.cart__product-count').textContent) + Number.parseInt(product.querySelector('div.product__quantity-value').textContent);
+      } else {
+         cartProducts.append(cartTemplate(productId, productImg, product.querySelector('div.product__quantity-value').textContent));
+      }
+   }, false);
+
+});
 
 function cartTemplate(productId, productImg, productCount) {
-    let newDiv = document.createElement('div');
-    newDiv.className = 'cart__product';
-    newDiv.dataset.id = productId;
+   let newDiv = document.createElement('div');
+   newDiv.className = 'cart__product';
+   newDiv.dataset.id = productId;
 
-    let newImage = document.createElement('cart__product');
-    newImage.className = 'cart__product-image';
-    newImage.src = productImg;
+   let newImg = document.createElement('img');
+   newImg.className = 'cart__product-image';
+   newImg.src = productImg;
 
-    newDiv.append(newImage);
+   newDiv.append(newImg);
 
-    let newCountDiv = document.createElement('div');
-    newCountDiv.className = 'cart__product-count';
-    newCountDiv.textContent = productCount;
-    newDiv.append(newCountDiv);
+   let newCartCountDiv = document.createElement('div');
+   newCartCountDiv.className = 'cart__product-count';
+   newCartCountDiv.textContent = productCount;
 
-    return newDiv;
+   newDiv.append(newCartCountDiv);
+
+   return newDiv;
 }
 
-   productsList.forEach((product) => {
-    Array.from(product.querySelectorAll('div.product__quantity-control')).forEach((quantityControl) => {
-    quantityControl.addEventListener('click', (evt) => {
-        evt.preventDefault();
-        if (evt.target.classList.contains('product__quantity-control-inc')) {
-            product.querySelector('div.product__quantity-value').textContent++;
-        } else if (evt.target.classList.contains('product__quantity-control-dec')) {
-            product.querySelector('div.product__quantity-value').textContent--;
-        }
-    }, false)
-})
-
-let productId = product.dataset.id;
-let productImg = product.querySelector('img.product__image').src;
-
-
-product.querySelector('div.product__add').addEventListener('click', (evt) => {
-    evt.preventDefault();
-    let nowProductCart = Array.from(productCart.querySelectorAll('.cart__product')).find(item => item.dataset.id == productId)
-    if (nowProductCart) {
-        nowProductCart.querySelector('div.cart__product-count').textContent = nowProductCart.querySelector('div.cart__product-count').textContent + product.querySelector('div.product__quantity-value').textContent;
-     } else {
-        productCart.append(cartTemplate(productId, productImg, product.querySelector('div.product__quantity-value').textContent));
-     }
-  }, false);
-
-})
-
+  
