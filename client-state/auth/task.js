@@ -43,7 +43,7 @@ function login(formData) {
          let response = xhr.response;
          if (response.success) {
             userID = response.user_id;
-            elementForm.reset();
+            signinForm.reset();
             authorization(userID);
             return;
          } else {

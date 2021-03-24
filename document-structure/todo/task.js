@@ -1,41 +1,32 @@
 'use strict';
 
-const taskButton = document.getElementById('tasks__add');
-const taskForm = document.forms['tasks__form'];
-const taskList = document.getElementById('tasks__list');
-
-taskButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    const taskInput = document.getElementById("task__input");
-    const newTask = taskInput.value;
-
-    if (newTask) {
-        taskList.append(taskTemplate(newTask));
-        taskForm.reset();
-    }
-    });
-
-    function taskTemplate(title) {
-        let newDiv = document.createElement('div');
-        newDiv.className = 'task';
+        const taskInput = document.getElementById('task__input');
+        const tasksList = document.getElementById('tasks__list');
+        const taskRemove = document.getElementsByClassName("task__remove");
+        const tasksButton = document.getElementById('tasks__add');
+        const taskForm = document.forms['tasks__form'];
+        function add() {
+          taskForm.onsubmit = (event) => event.preventDefault();
+            if(taskInput.value.trim() !== ""){
+              tasksList.insertAdjacentHTML("afterbegin", `<div class="task">
+             <div class="task__title">
+               ${taskInput.value}
+             </div>
+             <a href="#" class="task__remove">&times;</a>
+             </div>`);  
+         
+            };
+             taskRemove[0].addEventListener('click', (event) => {
+             event.currentTarget.parentNode.remove();
+             });
+             taskInput.value = "";
+        }
     
-        let newDivTitle = document.createElement('div');
-        newDivTitle.className = 'task__title';
-        newDivTitle.insertAdjacentHTML('afterbegin', `${title}`);
-    
-        let newLinkRemove = document.createElement('a');
-        newLinkRemove.className = 'task__remove';
-        newLinkRemove.href = '#';
-        newLinkRemove.innerHTML = '&times;'
-        newLinkRemove.addEventListener('click', () => {
-            newDiv.remove();
-        })
+        tasksButton.onclick = () => {
+            add()};
         
-        newDiv.append(newLinkRemove);
-        newDiv.append(newDivTitle);
-        
-        return newDiv;
-    }
-
-
-    
+        taskInput.addEventListener("keydown", (event) => {
+            if (event.code === "Enter") {
+                event.preventDefault();
+                add()
+            }})
