@@ -4,7 +4,6 @@ const signin = document.querySelector('#signin');
 const welcomeElement = document.querySelector('#welcome');
 const userIdElement = document.querySelector('#user_id');
 const signinForm = document.querySelector('#signin__form');
-const logoutBtn = document.querySelector('#logout__btn'); 
 let userID = null;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,15 +21,6 @@ signinForm.addEventListener('submit', (evt) => {
    let formData = new FormData(signinForm);
    login(formData);
 }, false);
-
-
-logoutBtn.addEventListener('click', (evt) => {
-   evt.preventDefault();
-   localStorage.removeItem('userID');
-   welcomeElement.classList.remove('welcome_active');
-   signin.classList.add('signin_active');
-}, false);
-
 
 
 function login(formData) {
